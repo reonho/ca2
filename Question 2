@@ -1,1 +1,27 @@
+### Q2 ##### 
+#Prodcudtion Costs
+upc <- Unit_Production_Costs
+mts <- ts(upc$Mower)
+plot(mts, xlab= "Months (2010-2014)", ylab = "Cost")
+mhw <- HoltWinters(mts, gamma = F)
+plot(mhw)
+legend(2,60, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(mhw))
+forecast(mhw)
+plot(forecast(mhw))
+
+tts <- ts(upc$Tractor)
+plot(tts, xlab= "Months (2010-2014)", ylab = "Cost")
+thw <- HoltWinters(tts, gamma = F)
+plot(thw)
+legend(5,2100, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(thw))
+forecast(thw)
+plot(forecast(thw))
+
+
+
+
 
