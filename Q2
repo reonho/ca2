@@ -1,0 +1,102 @@
+upc <- Unit_Production_Costs
+MUS <-  Mower_Unit_Sales
+IMTS <- Industry_Mower_Total_Sales
+TUS <- Tractor_Unit_Sales
+ITTS <- Industry_Tractor_Total_Sales
+
+#Mower Sales
+#NA
+nats <- ts(MUS$`NA`, start = c(2010, 1), end = c(2014, 12), frequency = 12)
+plot(nats, xlab = "Months (2010-2014)", ylab = "Sales")
+#no trend with seasonality
+nahw <- HoltWinters(nats, beta = FALSE)
+plot(nahw)
+legend(2011,9000, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(nahw))
+forecast(nahw,12)
+plot(forecast(nahw,12))
+
+#SA
+sats <- ts(MUS$`SA`, start = c(2010, 1), end = c(2014, 12), frequency = 12)
+plot(sats, xlab = "Months (2010-2014)", ylab = "Sales")
+#trend with seasosality
+sahw <- HoltWinters(sats)
+plot(sahw)
+legend(2011,400, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(sahw))
+forecast(sahw,12)
+plot(forecast(sahw,12))
+
+#Europe
+euts <- ts(MUS$`Europe`, start = c(2010, 1), end = c(2014, 12), frequency = 12)
+plot(euts, xlab = "Months (2010-2014)", ylab = "Sales")
+#trend with seasonality
+euhw <- HoltWinters(euts)
+plot(euhw)
+legend(2011,400, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(euhw))
+forecast(euhw,12)
+plot(forecast(euhw,12))
+
+#Pacific
+pacts <- ts(MUS$`Pacific`, start = c(2010, 1), end = c(2014, 12), frequency = 12)
+plot(pacts, xlab = "Months (2010-2014)", ylab = "Sales")
+#check for seasonality
+plot(decompose(pacts, type = "additive"))
+#trend with seasonality
+pachw <- HoltWinters(pacts)
+plot(pachw)
+legend(2011,220, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(pachw))
+forecast(pachw,12)
+plot(forecast(pachw,12))
+
+#China
+chits <- ts(MUS$`China`, start = c(2010, 1), end = c(2014, 12), frequency = 12)
+plot(chits, xlab = "Months (2010-2014)", ylab = "Sales")
+chits2 <- window(chits, start = c(2014, 1))
+#no trend, no seasonality
+library(TTR)
+ma<- SMA(chits2, 3)
+plot.ts(chits2)
+lines(ma, col="red")
+legend(2014,20, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+
+chi2hw <- HoltWinters(chits2)
+plot(chi2hw)
+legend(2011,220, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(chi2hw))
+forecast(pachw,12)
+plot(forecast(chi2hw,12))
+
+
+#Production Costs
+mts <- ts(upc$Mower)
+plot(mts, xlab= "Months (2010-2014)", ylab = "Cost")
+mhw <- HoltWinters(mts, gamma = F)
+plot(mhw)
+legend(2,60, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(mhw))
+forecast(mhw,12)
+plot(forecast(mhw,12))
+
+tts <- ts(upc$Tractor)
+plot(tts, xlab= "Months (2010-2014)", ylab = "Cost")
+thw <- HoltWinters(tts, gamma = F)
+plot(thw)
+legend(5,2100, c("Actual Costs", "Predicted Costs"), col = c("black", "red"), lwd =1, cex = 0.7)
+library(forecast)
+accuracy(forecast(thw))
+forecast(thw)
+plot(forecast(thw))
+
+
+
+
+
