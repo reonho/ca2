@@ -48,6 +48,7 @@ rsq <- function(x){
   ess <- sum(residuals(x)^2)
   return(1 - ess/tss)
 }
+                                    
 #Linear model
 ENG_linear <- lm(ENG$`Production Time (min)`~ ENG$Sample)
 summary(ENG_linear)
